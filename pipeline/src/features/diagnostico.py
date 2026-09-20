@@ -1,7 +1,7 @@
 """Diagnóstico exploratório: estacionariedade, decomposição sazonal e correlação
-cruzada com defasagens (spec 02, seção "Decomposição e diagnóstico").
+cruzada com defasagens.
 
-Implementa `specs/02-limpeza-eda/spec.md`, critério 2: para cada série do núcleo
+para cada série do núcleo
 nacional, produz decomposição sazonal, testes de estacionariedade e correlação
 cruzada com defasagens de 0 a 12 meses contra o indicador de exposição a apostas.
 """
@@ -17,15 +17,14 @@ OBSERVACOES_MINIMAS_DECOMPOSICAO = 24
 
 class SerieCurtaDemaisError(Exception):
     """Levantado quando uma série tem menos de `OBSERVACOES_MINIMAS_DECOMPOSICAO`
-    observações — spec 02, "Casos de borda": não força decomposição instável."""
+    observações: não força decomposição instável."""
 
 
 def avaliar_estacionariedade(serie: pd.Series) -> dict:
     """Roda ADF (H0: raiz unitária / não-estacionária) e KPSS (H0: estacionária) e
     retorna o resultado bruto de cada teste — a interpretação (estacionária ou não)
     fica explícita nas duas hipóteses nulas opostas, nunca resumida a um único booleano
-    sem contexto (specs/02-limpeza-eda/spec.md, critério 2: "resultado, não apenas a
-    conclusão binária")."""
+    sem contexto."""
     serie_limpa = serie.dropna()
 
     adf_estatistica, adf_p_valor, *_ = adfuller(serie_limpa, autolag="AIC")

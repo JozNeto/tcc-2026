@@ -1,4 +1,4 @@
-"""Rastreamento de proveniência das figuras publicadas (spec 05, critério 2):
+"""Rastreamento de proveniência das figuras publicadas:
 toda figura em `reports/final/figuras/` tem script gerador, versão da base usada e
 data de geração registrados em `reports/final/figuras/manifesto.csv`.
 """

@@ -1,12 +1,12 @@
 """Validadores reutilizáveis de qualidade de dados.
 
-Implementa o checklist da skill `validacao-dados` (.mcp/skills/validacao-dados/SKILL.md)
+Implementa o checklist de validação de dados
 como funções puras e testáveis. Módulos de coleta (`src/data/`) e tratamento
 (`src/features/`) devem chamar estas funções antes de gravar em `data/processed/`;
 os testes deste diretório garantem que a lógica de validação em si está correta.
 
 Cada validador levanta `ValidacaoDadosError` com uma lista de problemas encontrados,
-em vez de retornar um booleano — a falha deve ser acionável (ver spec da skill).
+em vez de retornar um booleano — a falha deve ser acionável.
 """
 
 from __future__ import annotations

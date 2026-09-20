@@ -1,4 +1,4 @@
-# Coleta das fontes sem API oficial — especificação definida
+# Coleta das fontes sem API oficial
 
 Cinco fontes exigem download manual. **Nada deve ser estimado, preenchido ou substituído**:
 se um valor não estiver na fonte oficial, fica ausente. Data de corte: **31/12/2025**.

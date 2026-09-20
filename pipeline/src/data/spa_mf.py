@@ -1,10 +1,10 @@
 """Ingestão dos painéis semestrais da SPA/MF — Secretaria de Prêmios e Apostas do
-Ministério da Fazenda (spec 01, camada Núcleo): número de apostadores, GGR, tíquete
+Ministério da Fazenda: número de apostadores, GGR, tíquete
 médio e perfil demográfico.
 
 **Sem API pública.** Os painéis da SPA/MF são publicados como relatórios/painéis
 semestrais (PDF e, em alguns casos, painel interativo tipo Power BI) sem endpoint de
-dados aberto confirmado. Conforme specs/constitution.md §4, este módulo não faz
+dados aberto confirmado. Conforme a política do projeto de evitar scraping, este módulo não faz
 scraping do painel interativo nem de PDF: espera um arquivo normalizado, exportado
 manualmente (via o botão de exportação do próprio painel, quando disponível, ou
 transcrito do relatório oficial em PDF) e colocado em `data/raw/spa_mf/`.
@@ -17,7 +17,7 @@ Formato esperado do arquivo normalizado (CSV ou XLSX), colunas:
 
 Como a divulgação é semestral, cada linha representa um semestre inteiro — a
 harmonização de periodicidade com as séries mensais do núcleo nacional é
-responsabilidade de `src/features/tratamento.py` (spec 02), não deste módulo.
+responsabilidade de `src/features/tratamento.py`, não deste módulo.
 """
 
 from __future__ import annotations

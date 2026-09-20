@@ -1,6 +1,4 @@
-"""Testes unitários de src/features/tratamento.py — dados sintéticos (spec 02,
-critério 1: deflacionamento correto por IPCA para série sintética conhecida, gap
-curto vs. gap estrutural)."""
+"""Testes unitários de src/features/tratamento.py — dados sintéticos."""
 
 from __future__ import annotations
 
@@ -92,7 +90,7 @@ def test_imputar_gaps_curtos_preenche_gap_de_1_mes():
 
 def test_imputar_gaps_curtos_nao_preenche_gap_estrutural_no_inicio():
     """Série que só começa em período recente (gap estrutural) não deve ser
-    imputada retroativamente — specs/02-limpeza-eda/spec.md, Casos de borda."""
+    imputada retroativamente."""
     datas = pd.date_range("2025-01-01", periods=5, freq="MS").date
     serie = pd.Series([np.nan, np.nan, np.nan, 40.0, 50.0], index=datas)
 

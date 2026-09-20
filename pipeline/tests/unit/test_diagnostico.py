@@ -1,5 +1,4 @@
-"""Testes unitários de src/features/diagnostico.py — dados sintéticos (spec 02,
-critério 3: teste com série sintética conhecida)."""
+"""Testes unitários de src/features/diagnostico.py — dados sintéticos."""
 
 from __future__ import annotations
 

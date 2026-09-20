@@ -1,4 +1,4 @@
-"""Teste de fumaça do dashboard Streamlit (spec 05, critério 1).
+"""Teste de fumaça do dashboard Streamlit.
 
 Roda o script do app em processo, via `streamlit.testing.v1.AppTest`, sem subir um
 servidor HTTP de verdade. Marcado como integração (não `network`) porque depende de

@@ -3,14 +3,14 @@
 Pipeline de dados e análise do Trabalho de Conclusão de Curso (Bacharelado em
 Ciência de Dados, UNIVESP) sobre a relação entre a expansão das apostas online e a
 vulnerabilidade financeira das famílias brasileiras — mensuração nacional, detecção
-de quebras estruturais associadas ao marco regulatório de 2025 e projeção de
-cenários de endividamento.
+de quebras estruturais associadas ao marco regulatório de 2025 e projeção
+univariada das séries de crédito.
 
 ## Pergunta de pesquisa
 
-Qual a trajetória projetada dos indicadores de endividamento e de inadimplência das
-famílias brasileiras sob a manutenção do padrão atual de exposição a apostas
-online?
+Há prejuízo na renda das famílias mais pobres por causa de jogos e apostas online?
+A análise usa apenas dados públicos agregados; os resultados e suas limitações
+estão em [`RESULTADOS.md`](RESULTADOS.md).
 
 ## Estrutura do repositório
 

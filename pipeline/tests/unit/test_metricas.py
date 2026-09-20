@@ -1,5 +1,5 @@
 """Testes unitários de src/evaluation/metricas.py — valores calculados à mão para
-séries sintéticas pequenas (spec 04, critério 1)."""
+séries sintéticas pequenas."""
 
 from __future__ import annotations
 

@@ -1,5 +1,5 @@
 """Testes unitários de src/features/indicador_territorial.py — dados sintéticos.
-Verifica também as restrições de specs/constitution.md §5 (sem projeção no Recorte 1,
+Verifica também as restrições metodológicas (sem projeção no Recorte 1,
 sem modelagem no Recorte 2) indiretamente: nenhuma função aqui aceita horizonte de
 projeção nem ajusta modelo — a API em si não oferece como violar a restrição.
 """

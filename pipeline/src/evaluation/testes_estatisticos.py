@@ -1,6 +1,4 @@
-"""Teste de diferença de desempenho entre modelos — Diebold-Mariano (spec 04,
-critério 1: nenhuma comparação de modelo é válida sem este teste, além da métrica de
-erro relativo — constitution §6).
+"""Teste de diferença de desempenho entre modelos — Diebold-Mariano.
 """
 
 from __future__ import annotations
@@ -91,8 +89,6 @@ def calcular_diebold_mariano(
 
 
 def corrigir_bonferroni(p_valores: list[float]) -> list[float]:
-    """Correção de Bonferroni para múltiplas comparações (specs/04-avaliacao/spec.md,
-    critério 1: "com correção para múltiplas comparações se mais de dois modelos
-    forem comparados simultaneamente")."""
+    """Correção de Bonferroni para múltiplas comparações."""
     n_testes = len(p_valores)
     return [min(p * n_testes, 1.0) for p in p_valores]

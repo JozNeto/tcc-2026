@@ -1,10 +1,10 @@
-"""Coleta de séries do IBGE via API SIDRA (spec 01, camada "Todas").
+"""Coleta de séries do IBGE via API SIDRA.
 
 Fonte oficial com API REST pública e estável — nenhuma necessidade de scraping
-(specs/constitution.md §4). Documentação: https://apisidra.ibge.gov.br/
+. Documentação: https://apisidra.ibge.gov.br/
 
 As tabelas/variáveis abaixo foram verificadas manualmente contra a API real em
-2026-08-17 (ver docs/adr/0003-estrategia-de-acesso-por-fonte.md):
+2026-08-17:
 
 - Tabela 6381, variável 4099: taxa de desocupação, PNAD Contínua, trimestre móvel (%).
 - Tabela 8880, variável 7170, classificação 11046=56734: índice de volume de vendas
@@ -98,12 +98,12 @@ def coletar(data_corte: dt.date, tabelas: dict[str, dict] | None = None) -> pd.D
     """Coleta as séries do IBGE/SIDRA usadas como controle socioeconômico do projeto.
 
     Args:
-        data_corte: data-limite de referência (specs/constitution.md §3).
+        data_corte: data-limite de referência.
         tabelas: mapeamento `nome_variavel -> config SIDRA`; usa `TABELAS` (catálogo
             padrão do módulo) se não informado.
 
     Returns:
-        DataFrame long-format conforme specs/01-ingestao-dados/spec.md.
+        DataFrame long-format no formato long-format do projeto.
 
     Raises:
         ColetaIBGEError: se qualquer tabela falhar ao ser consultada ou parseada.

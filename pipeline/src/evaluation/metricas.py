@@ -1,8 +1,8 @@
-"""Métricas de erro para comparação de modelos (spec 04, critério 1).
+"""Métricas de erro para comparação de modelos.
 
 MASE/sMAPE são as métricas de decisão principais (erro relativo — as séries do
 projeto têm escalas muito diferentes, ver docs/tdd.md, seção 4); RMSE/MAE ficam como
-leitura complementar (specs/04-avaliacao/spec.md).
+leitura complementar.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ import pandas as pd
 class MetricaError(Exception):
     """Levantado quando uma métrica fica matematicamente indefinida (ex.: MASE com
     série de treino constante) — nunca retorna `NaN` silencioso nesse caso
-    (specs/04-avaliacao/spec.md, "Casos de borda")."""
+."""
 
 
 def calcular_mae(valor_real, valor_previsto) -> float:

@@ -1,4 +1,4 @@
-"""Harness de regressão de performance entre execuções (specs/04-avaliacao/spec.md).
+"""Harness de regressão de performance entre execuções.
 
 Compara a métrica do modelo campeão da execução atual contra o último registro
 salvo em `historico_metricas.jsonl` para o mesmo (modelo, série, métrica). Na

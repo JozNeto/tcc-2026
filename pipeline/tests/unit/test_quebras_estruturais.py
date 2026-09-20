@@ -1,5 +1,5 @@
 """Testes unitários de src/features/quebras_estruturais.py — série sintética com
-quebra em posição conhecida (spec 02, critério 3: tolerância documentada de ±1 mês)."""
+quebra em posição conhecida."""
 
 from __future__ import annotations
 
@@ -80,7 +80,7 @@ def test_confrontar_com_calendario_lida_com_lista_de_quebras_vazia():
     assert not resultado.iloc[0]["coincide_dentro_da_tolerancia"]
 
 
-def test_confrontar_com_calendario_usa_calendario_padrao_da_proposta():
+def test_confrontar_com_calendario_usa_calendario_padrao_de_2025():
     resultado = confrontar_com_calendario_regulatorio([dt.date(2025, 1, 15)])
     assert set(resultado["marco"]) == {
         "regulamentacao_mercado",

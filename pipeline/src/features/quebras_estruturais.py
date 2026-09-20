@@ -1,10 +1,10 @@
 """Detecção de quebras estruturais e confronto com o calendário regulatório
-(spec 02, seção "Detecção de quebras estruturais").
+.
 
-Implementa `specs/02-limpeza-eda/spec.md`, critério 3/4 e `specs/constitution.md`
+Implementa
 §2: o detector nunca recebe as datas regulatórias como entrada — elas só entram na
 etapa separada de confronto (`confrontar_com_calendario_regulatorio`), que é o
-"teste de validade externa da base" citado na proposta (Etapa 4).
+"teste de validade externa da base".
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ import datetime as dt
 import pandas as pd
 import ruptures as rpt
 
-# Marcos regulatórios da proposta (docs/00-proposta-resumo.md, seção 4) — usados
+# Marcos regulatórios do projeto — usados
 # SOMENTE no confronto pós-detecção, nunca como entrada do algoritmo de segmentação.
 CALENDARIO_REGULATORIO = {
     "regulamentacao_mercado": dt.date(2025, 1, 1),
@@ -42,7 +42,7 @@ def detectar_quebras(
             modo padrão para séries reais, onde o número de quebras é desconhecido.
         penalidade: usada apenas quando `n_quebras` é `None` (modo Pelt). Penalidade
             maior → menos quebras detectadas. Não há valor universalmente correto;
-            calibrar por série e registrar em ADR se o valor padrão não servir.
+            calibrar por série e documentar se o valor padrão não servir.
         modelo: modelo de custo do `ruptures` (ver documentação da biblioteca).
 
     Returns:
@@ -67,8 +67,8 @@ def confrontar_com_calendario_regulatorio(
     calendario: dict[str, dt.date] | None = None,
     tolerancia_dias: int = 45,
 ) -> pd.DataFrame:
-    """Confronta as quebras detectadas com o calendário regulatório da proposta —
-    a etapa de validação externa citada na Etapa 4. Esta função nunca é chamada
+    """Confronta as quebras detectadas com o calendário regulatório do projeto —
+    a etapa de validação externa de validação externa. Esta função nunca é chamada
     pelo detector; é sempre uma etapa posterior e separada.
 
     Args:

@@ -1,9 +1,7 @@
-"""Painel interativo de consulta aos resultados (spec 05, entregável obrigatório da
-proposta — decisão de ferramenta: Streamlit, docs/adr/0001-registro-inicial.md).
+"""Painel interativo de consulta aos resultados.
 
 **Este app não calcula nada.** Só lê `data/processed/` e plota — toda lógica de
-indicador/modelo vive em `src/features/` e `src/models/` (specs/05-relatorio-entrega/spec.md,
-critério 1). Rodar com `make dashboard` ou `streamlit run src/dashboard/app.py`.
+indicador/modelo vive em `src/features/` e `src/models/`. Rodar com `make dashboard` ou `streamlit run src/dashboard/app.py`.
 """
 
 from __future__ import annotations
@@ -28,7 +26,7 @@ def montar_pagina() -> None:
     st.caption(
         "Painel de consulta aos resultados — TCC Ciência de Dados (UNIVESP). "
         "Indicadores territoriais (por UF/município) são aproximações exploratórias, "
-        "não medição oficial — ver docs/00-proposta-resumo.md."
+        "não medição oficial."
     )
 
     bases = listar_bases_disponiveis(DIRETORIO_PROCESSADO)
@@ -37,7 +35,7 @@ def montar_pagina() -> None:
         st.warning(
             "Nenhuma base processada encontrada em `data/processed/`. Rode o pipeline "
             "de coleta e tratamento (`src/data/`, `src/features/`) antes de usar este "
-            "painel — ver `TASKS.md` para o que já está implementado."
+            "painel."
         )
         return
 

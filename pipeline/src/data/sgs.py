@@ -1,18 +1,15 @@
 """Coleta de séries do SGS/BCB — Sistema Gerenciador de Séries Temporais.
 
-Cobre a camada "Núcleo" da proposta: endividamento das famílias, comprometimento de
-renda e inadimplência da carteira de pessoas físicas (ver docs/00-proposta-resumo.md,
-seção 5), mais o IPCA (série 433, variação mensal), usado por
-`src/features/tratamento.py` (spec 02) para deflacionar as demais séries nominais do
-projeto. Implementa specs/01-ingestao-dados/spec.md.
+Cobre a camada "Núcleo": endividamento das famílias, comprometimento de
+renda e inadimplência da carteira de pessoas físicas, mais o IPCA (série 433, variação
+mensal), usado por `src/features/tratamento.py` para deflacionar as demais séries
+nominais do projeto.
 
-Fonte oficial com API REST pública e estável — nenhuma necessidade de scraping
-(specs/constitution.md §4). Documentação da API:
-https://dadosabertos.bcb.gov.br/
+Fonte oficial com API REST pública e estável — nenhuma necessidade de scraping.
+Documentação da API: https://dadosabertos.bcb.gov.br/
 
 Os códigos de série abaixo foram verificados manualmente contra o Portal de Dados
-Abertos do BCB e uma consulta real à API (ver docs/adr/0002-series-sgs-nucleo-nacional.md
-para as alternativas descartadas e o motivo). Séries do SGS podem ser descontinuadas
+Abertos do BCB e uma consulta real à API. Séries do SGS podem ser descontinuadas
 e substituídas ao longo do tempo — antes de uma nova rodada de coleta em produção,
 reconfirme os códigos em https://dadosabertos.bcb.gov.br/.
 """
@@ -28,8 +25,7 @@ FONTE = "SGS/BCB"
 BASE_URL = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.{codigo}/dados"
 COLUNAS_SAIDA = ("data_referencia", "unidade", "variavel", "valor", "fonte", "coletado_em")
 
-# nome_variavel -> código SGS. Ver docs/glossario.md para a definição de cada variável
-# e docs/adr/0002-series-sgs-nucleo-nacional.md para a justificativa da escolha.
+# nome_variavel -> código SGS. As séries antigas 19881/19882 foram descontinuadas pelo BCB.
 SERIES = {
     "comprometimento_renda_pf": 29034,
     "endividamento_familias_sfn": 29037,
@@ -41,8 +37,7 @@ SERIES = {
 class ColetaSGSError(Exception):
     """Levantado quando a API do SGS falha ou retorna algo fora do esperado.
 
-    Nunca é engolida silenciosamente (specs/01-ingestao-dados/spec.md, "Casos de
-    borda": fonte fora do ar deve falhar de forma explícita).
+    Nunca é engolida silenciosamente.
     """
 
 
@@ -96,7 +91,7 @@ def coletar(
     """Coleta as séries do SGS/BCB do núcleo nacional.
 
     Args:
-        data_corte: data-limite de referência (specs/constitution.md §3). Nenhuma
+        data_corte: data-limite de referência. Nenhuma
             linha com `data_referencia` posterior a esta entra na saída — a API já é
             consultada com `dataFinal=data_corte`, e o resultado é filtrado de novo
             no cliente por segurança.
@@ -106,7 +101,7 @@ def coletar(
             padrão do módulo) se não informado.
 
     Returns:
-        DataFrame long-format conforme specs/01-ingestao-dados/spec.md.
+        DataFrame long-format no formato long-format do projeto.
 
     Raises:
         ColetaSGSError: se qualquer série falhar ao ser consultada ou parseada.

@@ -536,8 +536,7 @@ metod = [
 
     H2("3.11 Reprodutibilidade e Disponibilidade do Código"),
     P("Todo o código de coleta e análise, os testes e a configuração de integração contínua estão em um "
-      "repositório versionado, cujo endereço será inserido nesta seção na publicação: [LINK DO REPOSITÓRIO — "
-      "A INSERIR]. Os dados brutos não são versionados; são reconstruídos pelos scripts de coleta. O "
+      "repositório público no GitHub: https://github.com/JozNeto/tcc-2026. Os dados brutos não são versionados; são reconstruídos pelos scripts de coleta. O "
       "procedimento completo de reprodução está no Apêndice B."),
 ]
 inserir_antes(cron_h, metod)
@@ -953,7 +952,7 @@ apend = [QUEBRA()] + cron_elems + [
     H1("APÊNDICE B — PROCEDIMENTO DE REPRODUÇÃO"),
     P("Para reproduzir o estudo são necessários Python 3.12, acesso à internet e um token gratuito do Portal da "
       "Transparência (solicitado em portaldatransparencia.gov.br, com e-mail). O procedimento é:"),
-    LI("Clonar o repositório [LINK DO REPOSITÓRIO — A INSERIR] e criar um ambiente virtual;"),
+    LI("Clonar o repositório https://github.com/JozNeto/tcc-2026 e criar um ambiente virtual;"),
     LI("Instalar as dependências com as versões fixadas do arquivo de requisitos;"),
     LI("Registrar o token do Portal da Transparência em um arquivo de ambiente local, que não é versionado;"),
     LI("Executar a coleta do núcleo nacional e a coleta em fatias do Bolsa Família (repetindo o comando até "

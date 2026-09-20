@@ -1,11 +1,10 @@
 """Indicador composto de exposição territorial e caracterização descritiva de
-municípios (spec 02, Recortes 1 e 2 — Etapa 7 da proposta).
+municípios.
 
-**Restrições inegociáveis (specs/constitution.md §5):** este módulo nunca projeta
+**Restrições inegociáveis:** este módulo nunca projeta
 cenários (proibido no Recorte 1) e nunca modela/prevê nada (proibido no Recorte 2).
 Toda saída deste módulo carrega `exploratorio=True` — o indicador composto é uma
-aproximação por fontes indiretas, não uma medição oficial (docs/00-proposta-resumo.md,
-seção 2, "Advertência metodológica").
+aproximação por fontes indiretas, não uma medição oficial.
 """
 
 from __future__ import annotations
@@ -69,7 +68,7 @@ def construir_indicador_composto(
 def identificar_uf_maior_exposicao(indicador_composto: pd.DataFrame) -> str:
     """Retorna a unidade territorial (índice do DataFrame) com maior
     `indicador_composto` — ordenamento comparativo, nunca projeção
-    (specs/constitution.md §5: "sem projeção" no Recorte 1)."""
+."""
     return indicador_composto["indicador_composto"].idxmax()
 
 
@@ -82,11 +81,10 @@ def caracterizar_municipios(
 ) -> pd.DataFrame:
     """Caracterização puramente descritiva dos municípios da UF identificada
     (Recorte 2) — média, desvio-padrão e valor mais recente por variável.
-    **Nunca ajusta modelo nem projeta** (specs/constitution.md §5: "sem modelagem"
-    no Recorte 2).
+    **Nunca ajusta modelo nem projeta**.
 
     Args:
-        dados_municipio_long: long-format (contrato de specs/01-ingestao-dados/spec.md),
+        dados_municipio_long: long-format,
             já restrito aos municípios da UF de interesse.
 
     Returns:

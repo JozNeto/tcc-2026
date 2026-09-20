@@ -1,9 +1,9 @@
-"""Limiares de regressão de performance entre execuções (spec 04, critério 3).
+"""Limiares de regressão de performance entre execuções.
 
 Um limiar apertado demais gera falso positivo por ruído de reamostragem do rolling
-origin (ver specs/04-avaliacao/spec.md, "Casos de borda"). O valor abaixo é um ponto
+origin. O valor abaixo é um ponto
 de partida documentado, não definitivo — qualquer alteração deve vir acompanhada de
-um ADR justificando a nova margem.
+justificativa documentada para a nova margem.
 """
 
 from __future__ import annotations

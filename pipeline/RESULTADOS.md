@@ -65,7 +65,7 @@ não representa o gasto das famílias pobres (nem todo apostador aposta todo mê
   na API do BCB.
 - **Ausentes por não haver fonte acessível:** PEIC por faixa de renda (o dado que isolaria as
   famílias mais pobres), EPAE (Pix para recreação), séries semestrais da SPA/MF e ESTBAN
-  (Recorte 2, municípios). Sem eles, a Etapa 6 (projeção de cenários condicionada à exposição) e o
+  (Recorte 2, municípios). Sem eles, a projeção de cenários condicionada à exposição e o
   Recorte 2 não foram executados.
 - **Projeção univariada (`scripts/projetar_credito.py`).** SARIMAX de 24 meses por série, validado por
   origem móvel (h=12): nenhum modelo supera o naive de forma significativa (Diebold-Mariano, p entre 0,30 e

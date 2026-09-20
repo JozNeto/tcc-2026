@@ -1,7 +1,7 @@
-"""Coleta via API oficial do Portal da Transparência (spec 01, Recortes 1 e 2).
+"""Coleta via API oficial do Portal da Transparência.
 
 Fonte oficial com API REST documentada — requer token gratuito, nunca hardcoded
-(specs/constitution.md §4 e §"sem segredos"). Token vem da variável de ambiente
+. Token vem da variável de ambiente
 `PORTAL_TRANSPARENCIA_TOKEN` (ver `.env.example`); obtenha um cadastrando um e-mail em
 https://portaldatransparencia.gov.br/api-de-dados/cadastrar-email.
 
@@ -10,7 +10,7 @@ Endpoint verificado no OpenAPI spec real da API
 `/api-de-dados/novo-bolsa-familia-por-municipio`, parâmetros `mesAno` (AAAAMM),
 `codigoIbge`, `pagina`. **Não existe** endpoint de agregado nacional ou por UF nesta
 API — é por município. Agregações por UF (Recorte 1) somam os municípios daquela UF
-(ver `src/features/indicador_territorial.py`, spec 02).
+.
 """
 
 from __future__ import annotations
@@ -88,7 +88,7 @@ def coletar(
     município, mês a mês, para os municípios informados.
 
     Args:
-        data_corte: data-limite de referência (specs/constitution.md §3).
+        data_corte: data-limite de referência.
         codigos_ibge_municipio: códigos IBGE dos municípios a consultar. A API não
             oferece agregado nacional/UF — quem precisar de um agregado por UF deve
             informar todos os municípios daquela UF.

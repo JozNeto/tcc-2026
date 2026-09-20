@@ -1,4 +1,4 @@
-"""Utilitários compartilhados por todos os módulos de `src/data/` (spec 01).
+"""Utilitários compartilhados por todos os módulos de `src/data/`.
 
 Não é um módulo de coleta por si só — nenhuma fonte específica deve ser adicionada
 aqui, apenas lógica reaproveitável entre fontes (contrato de saída, truncamento por
@@ -17,7 +17,7 @@ COLUNAS_SAIDA = ("data_referencia", "unidade", "variavel", "valor", "fonte", "co
 
 class ArquivoExportacaoAusenteError(Exception):
     """Levantado quando uma fonte sem API oficial estável espera um arquivo
-    exportado manualmente (specs/constitution.md §4) que ainda não foi colocado em
+    exportado manualmente que ainda não foi colocado em
     `data/raw/`."""
 
 
@@ -29,7 +29,7 @@ def montar_long(
     fonte: str,
     coletado_em: dt.datetime,
 ) -> pd.DataFrame:
-    """Monta um DataFrame no contrato long-format de specs/01-ingestao-dados/spec.md."""
+    """Monta um DataFrame no contrato long-format do projeto."""
     return pd.DataFrame(
         {
             "data_referencia": list(datas),
@@ -45,7 +45,7 @@ def montar_long(
 def filtrar_data_corte(
     df: pd.DataFrame, data_corte: dt.date, coluna: str = "data_referencia"
 ) -> pd.DataFrame:
-    """Trunca `df` na data de corte do projeto (specs/constitution.md §3)."""
+    """Trunca `df` na data de corte do projeto."""
     if df.empty:
         return df
     return df[df[coluna] <= data_corte].reset_index(drop=True)
@@ -64,10 +64,7 @@ def ler_planilha_exportada(
     """Lê uma exportação manual oficial (CSV/XLSX) e converte para o contrato
     long-format do projeto.
 
-    Usada por fontes sem API oficial estável (PEIC, EPAE, painéis SPA/MF, Google
-    Trends, ESTBAN — ver docstring de cada módulo específico e
-    specs/constitution.md §4: "priorizar exportações manuais oficiais... sobre
-    scraping de HTML"). O arquivo deve ser colocado manualmente em `data/raw/`
+    Usada por fontes sem API oficial estável. O arquivo deve ser colocado manualmente em `data/raw/`
     por um integrante do grupo, exportado diretamente da interface oficial da
     fonte (nunca de terceiros).
 
@@ -75,7 +72,7 @@ def ler_planilha_exportada(
         caminho: caminho do arquivo CSV/XLSX exportado.
         coluna_data_origem: nome da coluna de data no arquivo original.
         coluna_valor_origem: nome da coluna de valor no arquivo original.
-        variavel: nome canônico da variável de saída (ver docs/glossario.md).
+        variavel: nome canônico da variável de saída.
         unidade: `"BR"`, sigla de UF ou código IBGE do município.
         fonte: identificador da fonte para a coluna `fonte` da saída.
         data_corte: ver `filtrar_data_corte`.

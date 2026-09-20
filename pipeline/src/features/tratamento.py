@@ -1,14 +1,13 @@
 """Tratamento da base nacional: deflacionamento IPCA, imputação de ausências e
-sinalização de outliers (spec 02, critério 1).
+sinalização de outliers.
 
-Implementa `specs/02-limpeza-eda/spec.md`, seção "Tratamento". Não decide sozinho o
-que fazer com um outlier sinalizado — apenas sinaliza (specs/constitution.md, "Casos
-de borda": outlier genuíno não deve ser removido silenciosamente).
+Não decide sozinho o
+que fazer com um outlier sinalizado — apenas sinaliza.
 
-Convenção de entrada: DataFrame long-format (contrato de `specs/01-ingestao-dados/spec.md`).
+Convenção de entrada: DataFrame long-format.
 Convenção de saída: DataFrame wide-format (uma linha por `data_referencia`, uma coluna
 por variável, mais colunas `<variavel>_imputado` e `<variavel>_outlier`), conforme
-`specs/02-limpeza-eda/spec.md`, seção "Contrato de dados".
+o contrato de dados do projeto.
 """
 
 from __future__ import annotations
@@ -87,7 +86,7 @@ def deflacionar(serie_nominal: pd.Series, indice_deflator: pd.Series) -> pd.Seri
 def imputar_gaps_curtos(serie: pd.Series, limite_gap: int = 2) -> tuple[pd.Series, pd.Series]:
     """Interpola linearmente ausências curtas (até `limite_gap` observações
     consecutivas) e deixa ausências mais longas (ex.: série com início tardio) como
-    `NaN` — specs/02-limpeza-eda/spec.md, "Casos de borda": gap estrutural não deve
+    `NaN`: gap estrutural não deve
     ser imputado retroativamente.
 
     Returns:
@@ -97,7 +96,7 @@ def imputar_gaps_curtos(serie: pd.Series, limite_gap: int = 2) -> tuple[pd.Serie
     ausente = serie.isna()
     # `pandas.Series.interpolate(limit=...)` limita quantos NaNs consecutivos são
     # preenchidos A PARTIR DA BORDA do gap — não descarta o gap inteiro quando ele é
-    # maior que o limite. Para o comportamento exigido pela spec ("gap com até
+    # maior que o limite. Para o comportamento esperado ("gap com até
     # `limite_gap` observações" é tudo-ou-nada), precisamos identificar cada run de
     # NaN consecutivo e decidir por run, não por posição individual.
     interpolada_interior = serie.interpolate(method="linear", limit_area="inside")
@@ -133,7 +132,7 @@ def tratar(
     variáveis monetárias, imputa gaps curtos e sinaliza outliers em todas as colunas.
 
     Args:
-        base_long: base bruta consolidada, long-format (ver specs/01-ingestao-dados/spec.md).
+        base_long: base bruta consolidada, long-format.
         ipca_variacao_mensal: ver `construir_indice_deflator`.
         data_base_deflacao: ver `construir_indice_deflator`.
         variaveis_monetarias: nomes de variáveis em R$ que devem ser deflacionadas —

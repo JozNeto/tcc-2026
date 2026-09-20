@@ -1,9 +1,7 @@
-"""Checagens de plausibilidade do indicador composto territorial (spec 04, seção
-"Validação do indicador territorial").
+"""Checagens de plausibilidade do indicador composto territorial.
 
 **Isto não é validação estatística de acurácia.** Não existe estatística oficial
-desagregada por UF/município para comparar o indicador composto (constitution §5,
-docs/00-proposta-resumo.md, seção 2) — as funções aqui checam plausibilidade
+desagregada por UF/município para comparar o indicador composto — as funções aqui checam plausibilidade
 indireta (correlação com proxies conhecidos, estabilidade do ranking a pequenas
 mudanças de peso), nunca "acurácia" ou "p-valor de validade" do indicador em si.
 """
@@ -54,7 +52,7 @@ def checar_estabilidade_a_pesos(
     Spearman entre o ranking original e cada ranking perturbado, quão sensível o
     ordenamento de UFs é à escolha exata dos pesos.
 
-    Seed sempre fixa (specs/constitution.md §1: reprodutibilidade obrigatória).
+    Seed sempre fixa.
 
     Returns:
         Dict com `correlacao_spearman_media`, `correlacao_spearman_minima`,

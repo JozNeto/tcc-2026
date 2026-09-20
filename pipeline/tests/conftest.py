@@ -17,13 +17,13 @@ DATA_CORTE_PROJETO = date(2025, 12, 31)
 
 @pytest.fixture
 def data_corte() -> date:
-    """Data de corte fixa do projeto (specs/constitution.md §3)."""
+    """Data de corte fixa do projeto."""
     return DATA_CORTE_PROJETO
 
 
 @pytest.fixture
 def serie_long_exemplo() -> pd.DataFrame:
-    """DataFrame sintético no contrato long-format de specs/01-ingestao-dados/spec.md."""
+    """DataFrame sintético no contrato long-format do projeto."""
     datas = pd.date_range("2020-01-01", "2025-12-01", freq="MS")
     return pd.DataFrame(
         {

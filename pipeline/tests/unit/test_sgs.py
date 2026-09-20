@@ -1,6 +1,4 @@
-"""Testes unitários de src/data/sgs.py — sem rede (specs/01-ingestao-dados/spec.md,
-critério 1: teste unitário com fixture gravada, teste de integração real separado
-e marcado @pytest.mark.network).
+"""Testes unitários de src/data/sgs.py — sem rede.
 
 As fixtures abaixo reproduzem o formato exato observado numa consulta real à API
 (https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados) em 2026-08-17.
@@ -102,7 +100,7 @@ def test_coletar_agrega_as_series_do_catalogo_padrao(monkeypatch):
 
 def test_coletar_filtra_dados_posteriores_a_data_corte_defensivamente(monkeypatch):
     """Mesmo que a API (hipoteticamente) devolva algo além do dataFinal pedido, o
-    cliente deve truncar de novo — specs/constitution.md §3 é uma garantia do
+    cliente deve truncar de novo — o truncamento é uma garantia do
     cliente, não uma confiança cega na API."""
 
     def fake_get(url, params=None, timeout=None):

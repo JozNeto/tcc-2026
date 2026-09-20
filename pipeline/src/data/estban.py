@@ -1,13 +1,10 @@
-"""Ingestão do ESTBAN/BCB — Estatística Bancária Mensal por município (spec 01,
-camada Recorte 2): saldos de crédito e de depósitos de poupança, usados apenas na
+"""Ingestão do ESTBAN/BCB — Estatística Bancária Mensal por município: saldos de crédito e de depósitos de poupança, usados apenas na
 caracterização descritiva dos municípios ilustrados.
 
 **Sem URL de download direta confirmada com segurança.** O BCB disponibiliza o ESTBAN
-por município no site institucional, mas a verificação em 2026-08-17 (ver
-docs/adr/0003-estrategia-de-acesso-por-fonte.md) não confirmou um padrão de
+por município no site institucional, mas a verificação em 2026-08-17 não confirmou um padrão de
 URL estável o suficiente para consumo programático sem risco de quebrar
-silenciosamente. Como o ESTBAN alimenta só o Recorte 2 (caracterização descritiva,
-não modelagem — specs/constitution.md §5), o custo de errar essa fonte por adivinhação
+silenciosamente. Como o ESTBAN alimenta só o Recorte 2, o custo de errar essa fonte por adivinhação
 é desproporcional ao benefício: este módulo lê um arquivo baixado manualmente do
 site oficial do BCB e colocado em `data/raw/estban/`.
 
@@ -19,7 +16,7 @@ Formato esperado do arquivo normalizado (CSV ou XLSX), colunas:
 
 Antes de uma nova rodada de coleta, reavaliar se vale a pena investir em um cliente
 HTTP direto (ex.: se o BCB publicar os arquivos ESTBAN em uma URL com padrão estável
-e documentado) — ver TASKS.md.
+e documentado).
 """
 
 from __future__ import annotations

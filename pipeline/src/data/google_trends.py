@@ -1,12 +1,11 @@
-"""Ingestão do Google Trends (spec 01, camadas Recortes 1 e 2): principal insumo do
-indicador composto de exposição territorial (docs/00-proposta-resumo.md, seção 5).
+"""Ingestão do Google Trends: principal insumo do
+indicador composto de exposição territorial.
 
 **Exportação manual oficial, não scraping, não `pytrends`.** trends.google.com não
 tem API pública, mas a própria interface oferece um botão nativo "Fazer download"
-que gera um CSV oficial — usar esse botão é a via decidida pelo grupo (ver
-docs/adr/0001-registro-inicial.md, decisão 4: evitar scraping ao máximo). Isso
+que gera um CSV oficial — usar esse botão é a via decidida pelo grupo. Isso
 também descarta a necessidade de `pytrends` (biblioteca não-oficial que faz scraping
-por baixo dos panos) cogitada inicialmente na proposta.
+por baixo dos panos) cogitada inicialmente.
 
 Este módulo lê diretamente o CSV nativo exportado pelo Google Trends, nos dois
 formatos que a interface produz:
@@ -20,9 +19,9 @@ formatos que a interface produz:
 
 Os valores do Google Trends são um índice relativo de 0 a 100 **normalizado por
 consulta** — comparar números de consultas/exportações diferentes sem um termo âncora
-comum não é válido (specs/01-ingestao-dados/spec.md, "Casos de borda"). Este módulo
+comum não é válido. Este módulo
 não resolve isso sozinho: a normalização entre exportações é responsabilidade de
-`src/features/indicador_territorial.py` (spec 02), que deve usar um termo âncora
+`src/features/indicador_territorial.py`, que deve usar um termo âncora
 comum entre todas as consultas territoriais.
 """
 
@@ -67,7 +66,7 @@ def coletar_regional(
     Args:
         caminho: caminho do CSV exportado.
         data_referencia: data a atribuir a todas as linhas (fim do período consultado).
-        data_corte: ver specs/constitution.md §3.
+        data_corte: data-limite de referência.
 
     Returns:
         DataFrame long-format, `unidade` = nome da UF/cidade como aparece no export
@@ -109,7 +108,7 @@ def coletar_temporal(caminho: Path, unidade: str, data_corte: dt.date) -> pd.Dat
         unidade: unidade a que esta série corresponde ("BR", sigla de UF, etc.) —
             informado por quem chama, pois o CSV nativo não traz essa informação
             de forma estruturada (aparece só no nome do termo pesquisado).
-        data_corte: ver specs/constitution.md §3.
+        data_corte: data-limite de referência.
     """
     texto = caminho.read_text(encoding="utf-8")
     linhas = texto.splitlines()

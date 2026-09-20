@@ -1,13 +1,12 @@
 """Ingestão da EPAE/BCB — Estatísticas de Pagamentos por Atividade Econômica
-(spec 01, camada Núcleo): fluxo de Pix de pessoas físicas para o setor de recreação,
+: fluxo de Pix de pessoas físicas para o setor de recreação,
 usado como proxy de exposição agregada a apostas online.
 
 **Sem dataset aberto/API confirmada.** A EPAE é uma estatística nova (BCB começou a
-divulgá-la em out/2025); a verificação em 2026-08-17 (ver
-docs/adr/0003-estrategia-de-acesso-por-fonte.md) não encontrou dataset no
+divulgá-la em out/2025); a verificação em 2026-08-17 não encontrou dataset no
 Portal de Dados Abertos do BCB nem endpoint OData estável — apenas divulgação em
 caixas de texto do Relatório de Política Monetária (PDF). Conforme
-specs/constitution.md §4, este módulo não faz scraping de PDF: espera um arquivo
+a política do projeto de evitar scraping, este módulo não faz scraping de PDF: espera um arquivo
 normalizado, exportado/transcrito manualmente a partir da divulgação oficial do BCB,
 em `data/raw/epae/`.
 
@@ -17,7 +16,7 @@ Formato esperado do arquivo normalizado (CSV ou XLSX), colunas:
 
 Antes de uma nova rodada de coleta, reconfirmar em https://dadosabertos.bcb.gov.br/
 se a EPAE já tem dataset/API própria — se sim, este módulo deve ser reescrito para
-consumi-la diretamente (ver TASKS.md).
+consumi-la diretamente.
 """
 
 from __future__ import annotations

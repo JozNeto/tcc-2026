@@ -1,8 +1,7 @@
-"""Geração de figuras para a monografia (spec 05, critério 1).
+"""Geração de figuras para a monografia.
 
 Este módulo só formata/plota o que já foi calculado em `src/features/` e
-`src/models/` — nenhuma lógica de cálculo nova aqui (specs/05-relatorio-entrega/spec.md,
-"Fora de escopo").
+`src/models/` — nenhuma lógica de cálculo nova aqui.
 """
 
 from __future__ import annotations

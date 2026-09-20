@@ -1,6 +1,6 @@
 """Teste de integração real de src/data/sgs.py contra a API do BCB.
 
-Roda via `make test-network` (não em `make test` padrão) — specs/01-ingestao-dados/spec.md
+Roda via `make test-network` (não em `make test` padrão)
 critério 1 exige um teste de integração de rede separado do teste unitário com fixture.
 """
 
