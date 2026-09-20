@@ -1,0 +1,109 @@
+{
+  "data_corte": "2025-12-31",
+  "series_analisadas": {
+    "comprometimento_renda_pf": {
+      "n_observacoes": 250,
+      "adf_p_valor": 0.6770491250594695,
+      "adf_rejeita_raiz_unitaria_5pct": false,
+      "kpss_p_valor": 0.01,
+      "quebras_detectadas": [
+        "2008-02-01",
+        "2009-10-01",
+        "2021-11-01"
+      ],
+      "confronto_calendario_regulatorio": [
+        {
+          "marco": "regulamentacao_mercado",
+          "data_marco": "2025-01-01",
+          "quebra_mais_proxima": "2021-11-01",
+          "distancia_dias": 1157,
+          "coincide_dentro_da_tolerancia": false
+        },
+        {
+          "marco": "restricao_beneficiarios",
+          "data_marco": "2025-10-01",
+          "quebra_mais_proxima": "2021-11-01",
+          "distancia_dias": 1430,
+          "coincide_dentro_da_tolerancia": false
+        },
+        {
+          "marco": "suspensao_parcial_judicial",
+          "data_marco": "2025-12-01",
+          "quebra_mais_proxima": "2021-11-01",
+          "distancia_dias": 1491,
+          "coincide_dentro_da_tolerancia": false
+        }
+      ]
+    },
+    "endividamento_familias_sfn": {
+      "n_observacoes": 252,
+      "adf_p_valor": 0.4545562649632415,
+      "adf_rejeita_raiz_unitaria_5pct": false,
+      "kpss_p_valor": 0.01,
+      "quebras_detectadas": [
+        "2007-12-01",
+        "2010-11-01",
+        "2021-04-01"
+      ],
+      "confronto_calendario_regulatorio": [
+        {
+          "marco": "regulamentacao_mercado",
+          "data_marco": "2025-01-01",
+          "quebra_mais_proxima": "2021-04-01",
+          "distancia_dias": 1371,
+          "coincide_dentro_da_tolerancia": false
+        },
+        {
+          "marco": "restricao_beneficiarios",
+          "data_marco": "2025-10-01",
+          "quebra_mais_proxima": "2021-04-01",
+          "distancia_dias": 1644,
+          "coincide_dentro_da_tolerancia": false
+        },
+        {
+          "marco": "suspensao_parcial_judicial",
+          "data_marco": "2025-12-01",
+          "quebra_mais_proxima": "2021-04-01",
+          "distancia_dias": 1705,
+          "coincide_dentro_da_tolerancia": false
+        }
+      ]
+    },
+    "inadimplencia_pf": {
+      "n_observacoes": 178,
+      "adf_p_valor": 0.19589112699899802,
+      "adf_rejeita_raiz_unitaria_5pct": false,
+      "kpss_p_valor": 0.01,
+      "quebras_detectadas": [
+        "2013-09-01",
+        "2017-11-01",
+        "2020-10-01",
+        "2022-06-01",
+        "2025-05-01"
+      ],
+      "confronto_calendario_regulatorio": [
+        {
+          "marco": "regulamentacao_mercado",
+          "data_marco": "2025-01-01",
+          "quebra_mais_proxima": "2025-05-01",
+          "distancia_dias": 120,
+          "coincide_dentro_da_tolerancia": false
+        },
+        {
+          "marco": "restricao_beneficiarios",
+          "data_marco": "2025-10-01",
+          "quebra_mais_proxima": "2025-05-01",
+          "distancia_dias": 153,
+          "coincide_dentro_da_tolerancia": false
+        },
+        {
+          "marco": "suspensao_parcial_judicial",
+          "data_marco": "2025-12-01",
+          "quebra_mais_proxima": "2025-05-01",
+          "distancia_dias": 214,
+          "coincide_dentro_da_tolerancia": false
+        }
+      ]
+    }
+  }
+}

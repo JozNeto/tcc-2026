@@ -1,0 +1,124 @@
+bash: line 1: scripts/rodar_fatias_em_sequencia.sh: Permission denied
+[2026-09-20T15:56:24Z] Fatia: 150 municípios | progresso: 170/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T16:03:55Z] Fatia: 150 municípios | progresso: 320/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T16:11:27Z] Fatia: 150 municípios | progresso: 470/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T16:19:00Z] Fatia: 150 municípios | progresso: 620/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T16:26:31Z] Fatia: 150 municípios | progresso: 770/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T16:34:02Z] Fatia: 150 municípios | progresso: 920/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T16:41:33Z] Fatia: 150 municípios | progresso: 1070/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T16:49:04Z] Fatia: 150 municípios | progresso: 1220/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T16:56:36Z] Fatia: 150 municípios | progresso: 1370/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T17:04:07Z] Fatia: 150 municípios | progresso: 1520/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T17:11:39Z] Fatia: 150 municípios | progresso: 1670/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T17:19:15Z] Fatia: 150 municípios | progresso: 1820/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T17:26:46Z] Fatia: 150 municípios | progresso: 1970/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T17:34:18Z] Fatia: 150 municípios | progresso: 2120/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T17:41:49Z] Fatia: 150 municípios | progresso: 2270/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T17:49:23Z] Fatia: 150 municípios | progresso: 2420/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T17:56:55Z] Fatia: 150 municípios | progresso: 2570/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T18:11:03Z] Fatia: 150 municípios | progresso: 2720/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T18:30:35Z] Traceback (most recent call last):
+  File "/home/jozneto/univesp-tcc-2026/pipeline/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 470, in _make_request
+    self._validate_conn(conn)
+ERRO (rc=1) — parando.
+[2026-09-20T18:33:40Z] rc=1
+    municipios = tf.listar_municipios_ibge(cache=pasta / "municipios_ibge.csv")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jozneto/univesp-tcc-2026/pipeline/src/data/transparencia_fatias.py", line 54, in listar_municipios_ibge
+    raise TransparenciaFatiasError(f"falha ao listar municípios do IBGE: {exc}") from exc
+src.data.transparencia_fatias.TransparenciaFatiasError: falha ao listar municípios do IBGE: HTTPSConnectionPool(host='servicodados.ibge.gov.br', port=443): Max retries exceeded with url: /api/v1/localidades/municipios (Caused by NameResolutionError("HTTPSConnection(host='servicodados.ibge.gov.br', port=443): Failed to resolve 'servicodados.ibge.gov.br' ([Errno -3] Temporary failure in name resolution)"))
+falha 1/3 — aguardando 5 min e tentando de novo.
+[2026-09-20T18:39:46Z] rc=0
+Fatia: 200 municípios | progresso: 3003/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T18:42:58Z] rc=0
+Fatia: 200 municípios | progresso: 3203/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T18:46:13Z] rc=0
+Fatia: 200 municípios | progresso: 3403/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T18:49:26Z] rc=0
+Fatia: 200 municípios | progresso: 3603/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T18:52:39Z] rc=0
+Fatia: 200 municípios | progresso: 3803/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T18:55:53Z] rc=0
+Fatia: 200 municípios | progresso: 4003/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T18:59:10Z] rc=0
+Fatia: 200 municípios | progresso: 4203/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T20:51:00Z] rc=0
+Fatia: 200 municípios | progresso: 4403/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T20:54:10Z] rc=0
+Fatia: 200 municípios | progresso: 4603/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T20:58:05Z] rc=0
+Fatia: 200 municípios | progresso: 4803/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T21:01:14Z] rc=0
+Fatia: 200 municípios | progresso: 5003/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T21:04:22Z] rc=0
+Fatia: 200 municípios | progresso: 5203/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T21:07:29Z] rc=0
+Fatia: 200 municípios | progresso: 5403/5571
+Rode novamente para a próxima fatia.
+[2026-09-20T21:10:16Z] rc=0
+RS      349353331.0       514314.0                      497                   497
+SC      134515167.0       196951.0                      295                   295
+SE      236182740.0       350350.0                       75                    75
+SP     1453948716.0      2135084.0                      645                   645
+TO       98338389.0       140543.0                      139                   139
+Fatia: 168 municípios | progresso: 5571/5571
+Coleta completa. Agregado por UF:
+uf  valor_repassado  beneficiarios  municipios_com_registro  municipios_coletados
+AC       89675065.0       122895.0                       22                    22
+AL      341958483.0       492655.0                      102                   102
+AM      436258433.0       592289.0                       62                    62
+AP       81121849.0       111293.0                       16                    16
+BA     1536380307.0      2288534.0                      417                   417
+CE      893784958.0      1327720.0                      184                   184
+DF      104593768.0       149889.0                        1                     1
+ES      183941691.0       269945.0                       78                    78
+GO      297026855.0       434629.0                      246                   246
+MA      804942497.0      1141739.0                      217                   217
+MG      937684117.0      1392423.0                      853                   853
+MS      124792193.0       178429.0                       79                    79
+MT      147595836.0       211024.0                      142                   142
+PA      875655588.0      1236747.0                      144                   144
+PB      417951569.0       617004.0                      223                   223
+PE      986159610.0      1458491.0                      185                   185
+PI      369424136.0       545080.0                      224                   224
+PR      359205535.0       531661.0                      399                   399
+RJ      936887558.0      1379010.0                       92                    92
+RN      310191200.0       462691.0                      167                   167
+RO       84115010.0       122311.0                       52                    52
+RR       54211207.0        72304.0                       15                    15
+RS      349353331.0       514314.0                      497                   497
+SC      134515167.0       196951.0                      295                   295
+SE      236182740.0       350350.0                       75                    75
+SP     1453948716.0      2135084.0                      645                   645
+TO       98338389.0       140543.0                      139                   139
+CONCLUÍDO.

@@ -1,0 +1,33 @@
+# Versões fixadas = versões efetivamente usadas para gerar os resultados (Python 3.12.3).
+# Atualize com cuidado — mudar a versão de uma biblioteca central pode alterar um
+# resultado já reportado.
+
+# --- Dados ---
+pandas==3.0.6
+numpy==2.5.3
+pyarrow==25.0.1
+requests==2.34.2
+
+# --- Séries temporais / estatística ---
+statsmodels==0.15.0
+scipy==1.18.1
+ruptures==1.1.10
+scikit-learn==1.9.1
+lightgbm==4.7.0
+
+# --- Google Trends (API não oficial; ver RESULTADOS.md, limitações) ---
+pytrends==4.9.2
+
+# --- Visualização ---
+matplotlib==3.11.2
+plotly==7.1.0
+
+# --- Dashboard ---
+streamlit==1.64.0
+
+# --- Testes ---
+pytest==9.1.1
+pytest-mock==3.15.1
+
+# --- Qualidade de código ---
+ruff==0.16.8

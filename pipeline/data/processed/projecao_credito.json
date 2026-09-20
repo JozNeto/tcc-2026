@@ -1,0 +1,246 @@
+{
+  "inadimplencia_pf_total": {
+    "rotulo": "Inadimplência PF total (%)",
+    "n_obs": 178,
+    "inicio": "2011-03-01",
+    "fim": "2025-12-01",
+    "modelos": {
+      "naive": {
+        "mase_h1": 1.176229508196721,
+        "mase_h12": 7.759142496847415,
+        "cobertura95_h12": 0.6065573770491803,
+        "n_origens": 61
+      },
+      "naive_sazonal": {
+        "mase_h1": 6.671185372005044,
+        "mase_h12": 7.759142496847415,
+        "cobertura95_h12": 0.8688524590163934,
+        "n_origens": 61,
+        "dm_p_h1": 1.3413226085390306e-10,
+        "melhor_que_naive_h1": false,
+        "dm_p_h12": null,
+        "melhor_que_naive_h12": null
+      },
+      "sarimax_110": {
+        "mase_h1": 1.1173991346921743,
+        "mase_h12": 7.6893779590169435,
+        "cobertura95_h12": 0.7540983606557377,
+        "n_origens": 61,
+        "dm_p_h1": 0.11181891922528009,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.423009297913838,
+        "melhor_que_naive_h12": true
+      },
+      "sarimax_011": {
+        "mase_h1": 1.1307346417075823,
+        "mase_h12": 7.712288233561137,
+        "cobertura95_h12": 0.7049180327868853,
+        "n_origens": 61,
+        "dm_p_h1": 0.1198134152732453,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.4002127669211397,
+        "melhor_que_naive_h12": true
+      },
+      "sarimax_111": {
+        "mase_h1": 1.08993821737668,
+        "mase_h12": 7.899272926580775,
+        "cobertura95_h12": 0.8360655737704918,
+        "n_origens": 61,
+        "dm_p_h1": 0.06822784291731732,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.5363912818065839,
+        "melhor_que_naive_h12": false
+      }
+    },
+    "modelo_escolhido": "sarimax_110",
+    "projecao_dez2027": {
+      "previsao": 5.12,
+      "intervalo_inferior": 3.875632602874839,
+      "intervalo_superior": 6.364367397125161
+    },
+    "ultimo_valor": 5.12
+  },
+  "inadimplencia_cartao_rotativo": {
+    "rotulo": "Inadimplência do cartão rotativo (%)",
+    "n_obs": 178,
+    "inicio": "2011-03-01",
+    "fim": "2025-12-01",
+    "modelos": {
+      "naive": {
+        "mase_h1": 1.3528493364558936,
+        "mase_h12": 6.06104605776737,
+        "cobertura95_h12": 0.8032786885245902,
+        "n_origens": 61
+      },
+      "naive_sazonal": {
+        "mase_h1": 6.121935987509758,
+        "mase_h12": 6.06104605776737,
+        "cobertura95_h12": 0.6065573770491803,
+        "n_origens": 61,
+        "dm_p_h1": 7.527893863823465e-10,
+        "melhor_que_naive_h1": false,
+        "dm_p_h12": null,
+        "melhor_que_naive_h12": null
+      },
+      "sarimax_110": {
+        "mase_h1": 1.3588917212584886,
+        "mase_h12": 6.048430618152338,
+        "cobertura95_h12": 0.7868852459016393,
+        "n_origens": 61,
+        "dm_p_h1": 0.44446655034093707,
+        "melhor_que_naive_h1": false,
+        "dm_p_h12": 0.6086968024038133,
+        "melhor_que_naive_h12": true
+      },
+      "sarimax_011": {
+        "mase_h1": 1.3596990154828363,
+        "mase_h12": 6.045310942542621,
+        "cobertura95_h12": 0.7868852459016393,
+        "n_origens": 61,
+        "dm_p_h1": 0.36185734354450005,
+        "melhor_que_naive_h1": false,
+        "dm_p_h12": 0.4900883443965658,
+        "melhor_que_naive_h12": true
+      },
+      "sarimax_111": {
+        "mase_h1": 1.435841307768426,
+        "mase_h12": 5.773719376650182,
+        "cobertura95_h12": 0.5901639344262295,
+        "n_origens": 61,
+        "dm_p_h1": 0.12083789201965334,
+        "melhor_que_naive_h1": false,
+        "dm_p_h12": 0.9093541616326979,
+        "melhor_que_naive_h12": true
+      }
+    },
+    "modelo_escolhido": "sarimax_111",
+    "projecao_dez2027": {
+      "previsao": 64.36877198887323,
+      "intervalo_inferior": 50.199800734118924,
+      "intervalo_superior": 78.53774324362755
+    },
+    "ultimo_valor": 64.49
+  },
+  "comprometimento_renda_pf": {
+    "rotulo": "Comprometimento de renda (%)",
+    "n_obs": 250,
+    "inicio": "2005-03-01",
+    "fim": "2025-12-01",
+    "modelos": {
+      "naive": {
+        "mase_h1": 1.974882939014315,
+        "mase_h12": 10.929430983882161,
+        "cobertura95_h12": 0.6629213483146067,
+        "n_origens": 89
+      },
+      "naive_sazonal": {
+        "mase_h1": 10.72493755164456,
+        "mase_h12": 10.929430983882161,
+        "cobertura95_h12": 0.7415730337078652,
+        "n_origens": 89,
+        "dm_p_h1": 5.944622571973923e-10,
+        "melhor_que_naive_h1": false,
+        "dm_p_h12": null,
+        "melhor_que_naive_h12": null
+      },
+      "sarimax_110": {
+        "mase_h1": 1.665768130960996,
+        "mase_h12": 10.874220087408151,
+        "cobertura95_h12": 0.8202247191011236,
+        "n_origens": 89,
+        "dm_p_h1": 0.13061406780999651,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.9584932639713881,
+        "melhor_que_naive_h12": true
+      },
+      "sarimax_011": {
+        "mase_h1": 1.751916935576037,
+        "mase_h12": 10.867351804235813,
+        "cobertura95_h12": 0.7191011235955056,
+        "n_origens": 89,
+        "dm_p_h1": 0.06880106220338389,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.5762922631450023,
+        "melhor_que_naive_h12": true
+      },
+      "sarimax_111": {
+        "mase_h1": 1.6679884621584016,
+        "mase_h12": 10.853508523618098,
+        "cobertura95_h12": 0.8202247191011236,
+        "n_origens": 89,
+        "dm_p_h1": 0.1337388156677506,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.9673774318863035,
+        "melhor_que_naive_h12": true
+      }
+    },
+    "modelo_escolhido": "sarimax_111",
+    "projecao_dez2027": {
+      "previsao": 28.275535198794742,
+      "intervalo_inferior": 23.54115313398685,
+      "intervalo_superior": 33.00991726360263
+    },
+    "ultimo_valor": 28.09
+  },
+  "endividamento_familias_sfn": {
+    "rotulo": "Endividamento das famílias (% da renda)",
+    "n_obs": 252,
+    "inicio": "2005-01-01",
+    "fim": "2025-12-01",
+    "modelos": {
+      "naive": {
+        "mase_h1": 1.2489596337910942,
+        "mase_h12": 10.242405326674994,
+        "cobertura95_h12": 0.5888888888888889,
+        "n_origens": 90
+      },
+      "naive_sazonal": {
+        "mase_h1": 10.04837702871411,
+        "mase_h12": 10.242405326674994,
+        "cobertura95_h12": 0.8333333333333334,
+        "n_origens": 90,
+        "dm_p_h1": 2.0358898453753937e-06,
+        "melhor_que_naive_h1": false,
+        "dm_p_h12": null,
+        "melhor_que_naive_h12": null
+      },
+      "sarimax_110": {
+        "mase_h1": 0.9151644288599841,
+        "mase_h12": 9.54566709054731,
+        "cobertura95_h12": 0.8555555555555555,
+        "n_origens": 90,
+        "dm_p_h1": 0.0014217104600182662,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.36890359079826096,
+        "melhor_que_naive_h12": true
+      },
+      "sarimax_011": {
+        "mase_h1": 1.029092879876545,
+        "mase_h12": 10.077439687800224,
+        "cobertura95_h12": 0.6666666666666666,
+        "n_origens": 90,
+        "dm_p_h1": 0.0012065380892738453,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.3036324162552466,
+        "melhor_que_naive_h12": true
+      },
+      "sarimax_111": {
+        "mase_h1": 0.9392255503895235,
+        "mase_h12": 10.400200035579514,
+        "cobertura95_h12": 0.8,
+        "n_origens": 90,
+        "dm_p_h1": 0.0037296706059719575,
+        "melhor_que_naive_h1": true,
+        "dm_p_h12": 0.7968045835698021,
+        "melhor_que_naive_h12": false
+      }
+    },
+    "modelo_escolhido": "sarimax_110",
+    "projecao_dez2027": {
+      "previsao": 49.85228749882785,
+      "intervalo_inferior": 43.67167672815451,
+      "intervalo_superior": 56.03289826950119
+    },
+    "ultimo_valor": 49.7
+  }
+}

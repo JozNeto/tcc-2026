@@ -1,0 +1,12 @@
+Fonte: Secretaria de Prêmios e Apostas (SPA/MF), "Panorama Semestral do mercado regulado
+de Apostas de Quota Fixa — dados de 1º de janeiro a 30 de dezembro de 2025" (jan/2026).
+Arquivo: https://www.gov.br/fazenda/pt-br/composicao/orgaos/secretaria-de-premios-e-apostas/apresentacoes/defeso-2deg-panorama-semestral-de-apostas-de-quota-fixa-jan-2026.pdf
+Valores transcritos do texto do PDF (págs. 5, 10 e 11), sem nenhum ajuste:
+ - CPFs únicos que apostaram (dados acumulados): 25.245.319
+ - Contas ativas em operadores/empresas (acumulado): 87.617.439
+ - Contas ativas nas marcas/bets (acumulado): 100.775.427
+ - GGR do período (01/01 a 30/12/2025): R$ 36.959.783.379,70
+ - Destinações legais (12%), total no período: R$ 4.532.797.794,92
+ATENÇÃO: são totais de 2025 (um único ponto), não série mensal/semestral. Gráficos de gênero e
+faixa etária (págs. 6-8) são imagens e NÃO foram transcritos. Série por semestre/mês exige o
+painel do SIGAP ou os panoramas semestrais anteriores.
