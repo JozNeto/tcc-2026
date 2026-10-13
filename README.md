@@ -62,6 +62,25 @@ https://portaldatransparencia.gov.br/api-de-dados/cadastrar-email para recebê-l
 gratuitamente por e-mail. Cole o token recebido em `PORTAL_TRANSPARENCIA_TOKEN`, no
 `.env`.
 
+## Pipelines (GitHub Actions)
+
+Três workflows em `.github/workflows/`, todos de **disparo manual** (`workflow_dispatch`)
+— nenhum roda sozinho por commit, Pull Request ou agendamento. Para disparar: aba
+**Actions** do repositório → selecione o workflow pela esquerda → **Run workflow**.
+
+| Workflow | Arquivo | O que faz | Precisa de chave? |
+|---|---|---|---|
+| Coleta do Bolsa Família por município (lenta, em fatias) | `coleta-bolsa-familia.yml` | Coleta o Novo Bolsa Família, um município por chamada (5.571 no total), em fatias pequenas e pausadas; commita o progresso automaticamente a cada fatia (retomável se interrompido) | Sim — `PORTAL_TRANSPARENCIA_TOKEN`, como secret do repositório |
+| Coleta e análise dos dados | `coleta-dados.yml` | Coleta SGS/BCB, IBGE/SIDRA e Google Trends; roda a análise da pergunta central e a projeção univariada do crédito; publica os resultados como artefato de build (90 dias) | Não |
+| CI | `ci.yml` | Lint (`ruff`) e a suíte de testes automatizados; não coleta nem altera dado nenhum | Não |
+
+**Ordem de execução:** a coleta do Bolsa Família precisa já ter rodado (ou já estar
+commitada) antes da coleta e análise — `scripts/analisar_pergunta_central.py` depende do
+arquivo que ela produz, e falha de forma explícita sem ele. Para dezembro de 2025
+(`202512`) isso já está satisfeito; ao atualizar para um mês novo, rode a coleta do Bolsa
+Família primeiro, até ela concluir. Detalhes de como obter o token e armazená-lo como
+secret: ver seção seguinte.
+
 ## Dados versionados por exceção
 
 Por padrão `data/raw/` e `data/processed/` não são versionados (ver `.gitignore`) — são
