@@ -48,8 +48,16 @@ def main() -> None:
     elif r["total_feitos"] < r["total_municipios"]:
         print("Rode novamente para a próxima fatia.")
     else:
-        print("Coleta completa. Agregado por UF:")
-        print(tf.agregar_por_uf(arq).to_string(index=False))
+        agregado = tf.agregar_por_uf(arq)
+        saida = RAIZ / "data" / "processed" / f"bolsa_familia_por_uf_{args.mes}.csv"
+        agregado.to_csv(saida, index=False)
+        print("Coleta completa. Agregado por UF salvo em", saida)
+        print(agregado.to_string(index=False))
+        print(
+            "\nEsse arquivo é a única exceção versionada em data/processed/ (ver .gitignore) — "
+            "é usado por scripts/analisar_pergunta_central.py e é caro de refazer. Depois de "
+            "gerá-lo, faça commit dele (veja o README, seção 'Dados versionados por exceção')."
+        )
 
 
 if __name__ == "__main__":

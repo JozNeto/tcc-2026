@@ -59,7 +59,40 @@ cp .env.example .env        # preencher PORTAL_TRANSPARENCIA_TOKEN
 
 Token do Portal da Transparência: cadastre um e-mail em
 https://portaldatransparencia.gov.br/api-de-dados/cadastrar-email para recebê-lo
-gratuitamente por e-mail.
+gratuitamente por e-mail. Cole o token recebido em `PORTAL_TRANSPARENCIA_TOKEN`, no
+`.env`.
+
+## Dados versionados por exceção
+
+Por padrão `data/raw/` e `data/processed/` não são versionados (ver `.gitignore`) — são
+reconstruídos pelos scripts de coleta. A única exceção é
+`data/processed/bolsa_familia_por_uf_202512.csv`: um agregado de 27 linhas (uma por UF,
+sem dado pessoal) exigido por `scripts/analisar_pergunta_central.py`.
+
+Ele é exceção porque é caro de refazer: a API do Portal da Transparência entrega **um
+município por chamada**, então reunir o Novo Bolsa Família por UF exige consultar os
+5.571 municípios do Brasil — com uma chave pessoal, que tem limite de uso. Por isso a
+coleta é feita à parte (não roda no workflow `coleta-dados.yml`), em fatias pequenas,
+pausadas e retomáveis:
+
+```bash
+# 1) obtenha o token (ver seção "Configuração" acima) e coloque em pipeline/.env
+
+# 2a) uma fatia por vez (retoma de onde parou a cada execução)
+.venv/bin/python scripts/coletar_transparencia_fatias.py --mes 202512 --fatia 150 --pausa 1.5
+
+# 2b) ou todas as fatias em sequência, com pausa entre elas, até concluir
+#     (mes, fatia, pausa entre fatias em s, pausa entre requisições em s)
+bash scripts/rodar_fatias_em_sequencia.sh 202512 150 180 1.5
+```
+
+O progresso fica em `data/raw/transparencia/bolsa_familia_<mes>.csv` (retomável — rodar de
+novo continua de onde parou, nunca perde o que já foi coletado). Se a API sinalizar limite
+de uso (HTTP 429/403), o script para sozinho; espere alguns minutos e rode de novo. Quando
+os 5.571 municípios forem coletados, o script agrega por UF automaticamente e grava
+`data/processed/bolsa_familia_por_uf_<mes>.csv` — **esse arquivo precisa ser commitado** para
+que `scripts/analisar_pergunta_central.py` (local ou no workflow `coleta-dados.yml`) funcione.
+Município sem registro na API nunca é gravado como zero, sempre como ausente.
 
 ## Testes
 
