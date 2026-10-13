@@ -14,6 +14,10 @@ name: Coleta do Bolsa Família por município (lenta, em fatias)
 # Requer o secret PORTAL_TRANSPARENCIA_TOKEN configurado no repositório (Settings →
 # Secrets and variables → Actions → New repository secret). Ver README, seção "Dados
 # versionados por exceção".
+#
+# Para validar a pipeline sem tocar nos dados reais: preencha o input "ufs" (ex.: AP,RR)
+# ao disparar o workflow — a coleta fica restrita a essas UFs e grava em teste_de_2_ufs/
+# em vez de data/. Deixe "ufs" em branco para a coleta completa de verdade.
 
 on:
   workflow_dispatch:
@@ -30,6 +34,13 @@ on:
       pausa_req:
         description: "Pausa entre requisições, em segundos"
         default: "1.5"
+      ufs:
+        description: >-
+          UFs para coleta PARCIAL, separadas por vírgula (ex.: AP,RR) — valida a
+          pipeline rápido, sem tocar nos dados reais. Resultado vai para
+          teste_de_2_ufs/, não para data/. Deixe em branco para a coleta completa
+          (as 27 UFs, salva em data/, como de costume).
+        default: ""
 
 permissions:
   contents: write
@@ -75,6 +86,7 @@ jobs:
           FATIA: ${{ inputs.fatia }}
           PAUSA_FATIAS: ${{ inputs.pausa_fatias }}
           PAUSA_REQ: ${{ inputs.pausa_req }}
+          UFS: ${{ inputs.ufs }}
         run: |
           set -u
           if [ -z "${PORTAL_TRANSPARENCIA_TOKEN:-}" ]; then
@@ -82,10 +94,21 @@ jobs:
             exit 1
           fi
 
+          EXTRA_ARGS=()
+          if [ -n "$UFS" ]; then
+            echo "::notice::Modo teste — coleta restrita a: $UFS. Resultado vai para teste_de_2_ufs/, não para data/."
+            CAMINHO_BRUTO="teste_de_2_ufs/teste_bolsa_familia.csv"
+            CAMINHO_AGREGADO="teste_de_2_ufs/teste_bolsa_familia_por_uf.csv"
+            EXTRA_ARGS=(--ufs "$UFS" --saida "$CAMINHO_BRUTO" --saida-agregado "$CAMINHO_AGREGADO")
+            CAMINHOS_GIT=(teste_de_2_ufs)
+          else
+            CAMINHOS_GIT=(data/raw/transparencia data/processed)
+          fi
+
           commitar_progresso() {
-            if [ -n "$(git status --porcelain -- data/raw/transparencia data/processed/bolsa_familia_por_uf_*.csv 2>/dev/null)" ]; then
-              git add -A -- data/raw/transparencia data/processed
-              git commit -q -m "Progresso da coleta do Bolsa Família ($MES)"
+            if [ -n "$(git status --porcelain -- "${CAMINHOS_GIT[@]}" 2>/dev/null)" ]; then
+              git add -A -- "${CAMINHOS_GIT[@]}"
+              git commit -q -m "Progresso da coleta do Bolsa Família ($MES)${UFS:+ [teste: $UFS]}"
               git push -q
               echo "  progresso commitado."
             fi
@@ -93,7 +116,7 @@ jobs:
 
           falhas=0
           while true; do
-            saida=$(python scripts/coletar_transparencia_fatias.py --mes "$MES" --fatia "$FATIA" --pausa "$PAUSA_REQ" 2>&1)
+            saida=$(python scripts/coletar_transparencia_fatias.py --mes "$MES" --fatia "$FATIA" --pausa "$PAUSA_REQ" "${EXTRA_ARGS[@]}" 2>&1)
             rc=$?
             echo "$saida"
             commitar_progresso
