@@ -58,9 +58,12 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Configurar identidade do git (commits de progresso)
+        # Atribui os commits a quem disparou o workflow (github.actor), não a um bot
+        # genérico — não precisa de secret nem de conta configurada, o GitHub já expõe
+        # quem clicou em "Run workflow" nesse contexto.
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Coletar em fatias até concluir, commitando o progresso a cada fatia
         env:
