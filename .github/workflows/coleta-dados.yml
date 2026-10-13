@@ -35,8 +35,10 @@ jobs:
 
       - name: Análise da pergunta central (associações, quebras, dimensionamento)
         run: python scripts/analisar_pergunta_central.py
-        # Requer data/processed/bolsa_familia_por_uf_*.csv (coleta em fatias, feita à parte por
-        # scripts/coletar_transparencia_fatias.py); sem ele a etapa falha de forma explícita.
+        # Requer data/processed/bolsa_familia_por_uf_*.csv, versionado no repositório (é uma
+        # coleta lenta e pautada em fatias, feita à parte por scripts/coletar_transparencia_fatias.py,
+        # para preservar a chave do Portal da Transparência — não roda neste workflow). Se o
+        # arquivo for removido ou precisar de uma data de corte nova, refaça essa coleta antes.
 
       - name: Projeção univariada do crédito (validação por origem móvel)
         run: python scripts/projetar_credito.py
