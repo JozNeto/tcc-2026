@@ -11,6 +11,13 @@ data/processed/*
 # coleta a cada execução do workflow, por isso versionamos o resultado já agregado.
 !data/processed/bolsa_familia_por_uf_*.csv
 
+# Exceção: resultado da coleta PARCIAL/de teste (--ufs em
+# scripts/coletar_transparencia_fatias.py; ver .github/workflows/coleta-bolsa-familia.yml,
+# input "ufs") — valida a pipeline de ponta a ponta sem tocar nos dados reais acima.
+!data/processed/bolsa-familia-coleta-parcial/
+data/processed/bolsa-familia-coleta-parcial/*
+!data/processed/bolsa-familia-coleta-parcial/*.csv
+
 # Exceção: progresso bruto por município dessa mesma coleta (dado público, sem PII;
 # consulta por CPF/pessoa não é exposta pela API — só totais por município). É o
 # checkpoint que torna a coleta em .github/workflows/coleta-bolsa-familia.yml retomável

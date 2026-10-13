@@ -8,10 +8,12 @@ continuar de onde parou. Para no primeiro HTTP 429/403 sem insistir.
 
 --ufs restringe a coleta a UFs específicas (separadas por vírgula) — útil para
 testar/validar a pipeline (ex.: no workflow do GitHub Actions) sem rodar os 5.571
-municípios. --saida e --saida-agregado trocam os caminhos de saída padrão
+municípios nem tocar nos dados reais. Nesse modo, por padrão, a saída vai para
+data/processed/bolsa-familia-coleta-parcial/<UFs>.csv (agregado) e
+<UFs>_bruto.csv (bruto por município) — não para os caminhos normais
 (data/raw/transparencia/bolsa_familia_<mes>.csv e
-data/processed/bolsa_familia_por_uf_<mes>.csv) — use junto de --ufs para não
-sobrescrever uma coleta real em andamento com dados de teste.
+data/processed/bolsa_familia_por_uf_<mes>.csv). --saida e --saida-agregado
+sobrescrevem esses caminhos, se precisar de outro lugar.
 """
 
 from __future__ import annotations
@@ -50,14 +52,19 @@ def main() -> None:
     pasta = RAIZ / "data" / "raw" / "transparencia"
     municipios = tf.listar_municipios_ibge(cache=pasta / "municipios_ibge.csv")
 
+    ufs_slug = None
     if args.ufs:
         ufs = {u.strip().upper() for u in args.ufs.split(",") if u.strip()}
         municipios = municipios[municipios["uf"].isin(ufs)].reset_index(drop=True)
         if municipios.empty:
             raise SystemExit(f"nenhum município encontrado para as UFs {sorted(ufs)!r}")
-        print(f"Modo teste: restrito a {sorted(ufs)} ({len(municipios)} municípios).")
+        ufs_slug = "-".join(sorted(ufs))
+        print(f"Coleta parcial (teste): restrita a {sorted(ufs)} ({len(municipios)} municípios).")
 
-    arq = Path(args.saida) if args.saida else pasta / f"bolsa_familia_{args.mes}.csv"
+    pasta_parcial = RAIZ / "data" / "processed" / "bolsa-familia-coleta-parcial"
+    arq = Path(args.saida) if args.saida else (
+        pasta_parcial / f"{ufs_slug}_bruto.csv" if ufs_slug else pasta / f"bolsa_familia_{args.mes}.csv"
+    )
     if not arq.is_absolute():
         arq = RAIZ / arq
     arq.parent.mkdir(parents=True, exist_ok=True)
@@ -72,7 +79,8 @@ def main() -> None:
     else:
         agregado = tf.agregar_por_uf(arq)
         saida = Path(args.saida_agregado) if args.saida_agregado else (
-            RAIZ / "data" / "processed" / f"bolsa_familia_por_uf_{args.mes}.csv"
+            pasta_parcial / f"{ufs_slug}.csv" if ufs_slug
+            else RAIZ / "data" / "processed" / f"bolsa_familia_por_uf_{args.mes}.csv"
         )
         if not saida.is_absolute():
             saida = RAIZ / saida
