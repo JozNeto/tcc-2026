@@ -1,0 +1,55 @@
+name: Coleta e análise dos dados
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # toda segunda-feira às 09:00 UTC — as fontes usadas aqui são mensais, não há
+    # necessidade de rodar com mais frequência.
+    - cron: "0 9 * * 1"
+
+jobs:
+  coletar-e-analisar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Testes de integração contra as APIs reais
+        run: pytest tests/integration -m network
+
+      - name: Coletar núcleo nacional (SGS/BCB, IBGE/SIDRA)
+        env:
+          PORTAL_TRANSPARENCIA_TOKEN: ${{ secrets.PORTAL_TRANSPARENCIA_TOKEN }}
+        run: python scripts/coletar_nucleo.py
+
+      - name: Analisar núcleo nacional (tratamento, diagnóstico, quebras estruturais)
+        run: python scripts/analisar_nucleo.py
+
+      - name: Coletar dados da análise central (SGS, IBGE por UF, Google Trends)
+        run: python scripts/coletar_analise_central.py
+
+      - name: Análise da pergunta central (associações, quebras, dimensionamento)
+        run: python scripts/analisar_pergunta_central.py
+        # Requer data/processed/bolsa_familia_por_uf_*.csv (coleta em fatias, feita à parte por
+        # scripts/coletar_transparencia_fatias.py); sem ele a etapa falha de forma explícita.
+
+      - name: Projeção univariada do crédito (validação por origem móvel)
+        run: python scripts/projetar_credito.py
+
+      - name: Publicar resultados como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: dados-e-resultados-${{ github.run_id }}
+          path: |
+            data/raw/
+            data/processed/
+          retention-days: 90
