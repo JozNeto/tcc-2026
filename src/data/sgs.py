@@ -21,6 +21,8 @@ import datetime as dt
 import pandas as pd
 import requests
 
+from src.data._comum import requisitar_com_retentativas
+
 FONTE = "SGS/BCB"
 BASE_URL = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.{codigo}/dados"
 COLUNAS_SAIDA = ("data_referencia", "unidade", "variavel", "valor", "fonte", "coletado_em")
@@ -52,8 +54,7 @@ def _requisitar_serie(codigo: int, data_inicial: dt.date | None, data_final: dt.
 
     url = BASE_URL.format(codigo=codigo)
     try:
-        resposta = requests.get(url, params=params, timeout=30)
-        resposta.raise_for_status()
+        resposta = requisitar_com_retentativas(url, params=params, timeout=30)
     except requests.RequestException as exc:
         raise ColetaSGSError(f"falha ao consultar série SGS {codigo}: {exc}") from exc
 

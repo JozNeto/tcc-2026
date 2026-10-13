@@ -8,9 +8,11 @@ data de corte, leitura de exportações manuais oficiais).
 from __future__ import annotations
 
 import datetime as dt
+import time
 from pathlib import Path
 
 import pandas as pd
+import requests
 
 COLUNAS_SAIDA = ("data_referencia", "unidade", "variavel", "valor", "fonte", "coletado_em")
 
@@ -19,6 +21,40 @@ class ArquivoExportacaoAusenteError(Exception):
     """Levantado quando uma fonte sem API oficial estável espera um arquivo
     exportado manualmente que ainda não foi colocado em
     `data/raw/`."""
+
+
+def requisitar_com_retentativas(
+    url: str,
+    *,
+    params: dict | None = None,
+    timeout: int = 30,
+    tentativas: int = 4,
+    espera_inicial_s: float = 2.0,
+    dormir=time.sleep,
+) -> requests.Response:
+    """GET com novas tentativas (espera exponencial) para falhas transitórias —
+    erro 5xx do servidor, timeout ou problema de conexão. Erro 4xx (ex.: código
+    de série inexistente, token inválido) não é retentado: repetir a mesma
+    requisição malformada não ajudaria. APIs públicas do governo (BCB, IBGE)
+    apresentam instabilidade intermitente (ex.: 502 Bad Gateway) sem relação com
+    o código deste projeto."""
+    for tentativa in range(1, tentativas + 1):
+        try:
+            resposta = requests.get(url, params=params, timeout=timeout)
+            resposta.raise_for_status()
+            return resposta
+        except requests.HTTPError as exc:
+            codigo = exc.response.status_code if exc.response is not None else None
+            if codigo is None or codigo < 500 or tentativa == tentativas:
+                raise
+        except requests.RequestException:
+            if tentativa == tentativas:
+                raise
+        espera = espera_inicial_s * (2 ** (tentativa - 1))
+        print(f"  falha transitória em {url} (tentativa {tentativa}/{tentativas}); "
+              f"nova tentativa em {espera:.0f}s...")
+        dormir(espera)
+    raise AssertionError("inatingível: o loop sempre retorna ou levanta")  # pragma: no cover
 
 
 def montar_long(

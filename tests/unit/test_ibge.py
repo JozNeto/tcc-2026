@@ -79,7 +79,7 @@ def test_parse_tabela_monta_schema_esperado():
 
 
 def test_coletar_agrega_series_do_catalogo_padrao(monkeypatch):
-    def fake_get(url, timeout=None):
+    def fake_get(url, params=None, timeout=None):
         codigo = int(url.split("/t/")[1].split("/")[0])
         return RespostaFake(FIXTURE_POR_TABELA[codigo])
 
@@ -92,7 +92,7 @@ def test_coletar_agrega_series_do_catalogo_padrao(monkeypatch):
 
 
 def test_coletar_filtra_por_data_corte(monkeypatch):
-    def fake_get(url, timeout=None):
+    def fake_get(url, params=None, timeout=None):
         return RespostaFake(FIXTURE_TAXA_DESOCUPACAO)
 
     monkeypatch.setattr(ibge.requests, "get", fake_get)
@@ -104,7 +104,7 @@ def test_coletar_filtra_por_data_corte(monkeypatch):
 
 
 def test_requisitar_tabela_levanta_erro_explicito_em_falha_http(monkeypatch):
-    def fake_get(url, timeout=None):
+    def fake_get(url, params=None, timeout=None):
         return RespostaFake(None, status_ok=False)
 
     monkeypatch.setattr(ibge.requests, "get", fake_get)

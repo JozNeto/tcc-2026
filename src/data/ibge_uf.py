@@ -5,6 +5,8 @@ from __future__ import annotations
 import pandas as pd
 import requests
 
+from src.data._comum import requisitar_com_retentativas
+
 BASE = "https://apisidra.ibge.gov.br/values"
 
 COD_UF = {
@@ -23,8 +25,7 @@ def coletar_por_uf(tabela: int, variavel: int, periodo: str) -> pd.DataFrame:
     ou '202512')."""
     url = f"{BASE}/t/{tabela}/n3/all/v/{variavel}/p/{periodo}"
     try:
-        r = requests.get(url, timeout=60)
-        r.raise_for_status()
+        r = requisitar_com_retentativas(url, timeout=60)
         dados = r.json()
     except (requests.RequestException, ValueError) as exc:
         raise IbgeUfError(f"falha ao consultar {url}: {exc}") from exc

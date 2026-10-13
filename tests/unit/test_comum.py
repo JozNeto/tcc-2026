@@ -2,13 +2,16 @@ import datetime as dt
 
 import pandas as pd
 import pytest
+import requests
 
+from src.data import _comum
 from src.data._comum import (
     COLUNAS_SAIDA,
     ArquivoExportacaoAusenteError,
     filtrar_data_corte,
     ler_planilha_exportada,
     montar_long,
+    requisitar_com_retentativas,
 )
 
 
@@ -95,3 +98,73 @@ def test_ler_planilha_exportada_usa_coluna_de_unidade_quando_informada(tmp_path)
     )
 
     assert set(df["unidade"]) == {"SP", "RJ"}
+
+
+class _RespostaFake:
+    def __init__(self, status_code: int):
+        self.status_code = status_code
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise requests.HTTPError(f"HTTP {self.status_code}", response=self)
+
+
+def test_requisitar_com_retentativas_sucesso_de_primeira(monkeypatch):
+    chamadas = []
+    monkeypatch.setattr(_comum.requests, "get", lambda *a, **k: chamadas.append(1) or _RespostaFake(200))
+
+    resposta = requisitar_com_retentativas("http://x", dormir=lambda s: pytest.fail("não deveria dormir"))
+
+    assert resposta.status_code == 200
+    assert len(chamadas) == 1
+
+
+def test_requisitar_com_retentativas_insiste_em_erro_5xx_e_depois_funciona(monkeypatch):
+    respostas = iter([_RespostaFake(502), _RespostaFake(502), _RespostaFake(200)])
+    monkeypatch.setattr(_comum.requests, "get", lambda *a, **k: next(respostas))
+    esperas = []
+
+    resposta = requisitar_com_retentativas("http://x", tentativas=4, dormir=esperas.append)
+
+    assert resposta.status_code == 200
+    assert len(esperas) == 2  # duas falhas antes do sucesso
+
+
+def test_requisitar_com_retentativas_nao_insiste_em_erro_4xx(monkeypatch):
+    chamadas = []
+    monkeypatch.setattr(
+        _comum.requests, "get", lambda *a, **k: chamadas.append(1) or _RespostaFake(404)
+    )
+
+    with pytest.raises(requests.HTTPError):
+        requisitar_com_retentativas("http://x", dormir=lambda s: pytest.fail("não deveria dormir"))
+
+    assert len(chamadas) == 1  # não retentou
+
+
+def test_requisitar_com_retentativas_desiste_apos_esgotar_tentativas(monkeypatch):
+    monkeypatch.setattr(_comum.requests, "get", lambda *a, **k: _RespostaFake(503))
+    esperas = []
+
+    with pytest.raises(requests.HTTPError):
+        requisitar_com_retentativas("http://x", tentativas=3, dormir=esperas.append)
+
+    assert len(esperas) == 2  # dorme entre tentativas, não após a última
+
+
+def test_requisitar_com_retentativas_insiste_em_erro_de_conexao(monkeypatch):
+    chamadas = {"n": 0}
+
+    def fake_get(*a, **k):
+        chamadas["n"] += 1
+        if chamadas["n"] < 2:
+            raise requests.ConnectionError("conexão recusada")
+        return _RespostaFake(200)
+
+    monkeypatch.setattr(_comum.requests, "get", fake_get)
+    esperas = []
+
+    resposta = requisitar_com_retentativas("http://x", dormir=esperas.append)
+
+    assert resposta.status_code == 200
+    assert len(esperas) == 1

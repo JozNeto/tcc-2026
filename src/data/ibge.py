@@ -24,7 +24,12 @@ import datetime as dt
 import pandas as pd
 import requests
 
-from src.data._comum import COLUNAS_SAIDA, filtrar_data_corte, montar_long
+from src.data._comum import (
+    COLUNAS_SAIDA,
+    filtrar_data_corte,
+    montar_long,
+    requisitar_com_retentativas,
+)
 
 FONTE = "IBGE/SIDRA"
 BASE_URL = "https://apisidra.ibge.gov.br/values"
@@ -61,8 +66,7 @@ def _parse_periodo(codigo: str) -> dt.date:
 def _requisitar_tabela(nome_variavel: str, config: dict) -> list[dict]:
     url = _montar_url(config)
     try:
-        resposta = requests.get(url, timeout=30)
-        resposta.raise_for_status()
+        resposta = requisitar_com_retentativas(url, timeout=30)
     except requests.RequestException as exc:
         raise ColetaIBGEError(f"falha ao consultar SIDRA para '{nome_variavel}': {exc}") from exc
 
