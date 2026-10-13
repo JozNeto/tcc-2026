@@ -1,0 +1,115 @@
+name: Coleta do Bolsa Família por município (lenta, em fatias)
+
+# Único estágio da pipeline que precisa de uma chave de API pessoal (Portal da
+# Transparência). Roda à parte dos demais workflows porque consulta um município por
+# vez — ~5.571 chamadas — e precisa respeitar o limite de uso da chave.
+#
+# Fica em fatias pequenas e pausadas (ver scripts/coletar_transparencia_fatias.py) e
+# commita o progresso a cada fatia, para nunca perder o que já foi coletado: se o job
+# estourar o tempo limite do runner ou a API sinalizar limite de uso, é só disparar o
+# workflow de novo — ele retoma de onde parou. Ao concluir os 5.571 municípios, grava
+# também o agregado por UF (data/processed/bolsa_familia_por_uf_<mes>.csv) usado por
+# scripts/analisar_pergunta_central.py.
+#
+# Requer o secret PORTAL_TRANSPARENCIA_TOKEN configurado no repositório (Settings →
+# Secrets and variables → Actions → New repository secret). Ver README, seção "Dados
+# versionados por exceção".
+
+on:
+  workflow_dispatch:
+    inputs:
+      mes:
+        description: "Mês de referência (AAAAMM)"
+        default: "202512"
+      fatia:
+        description: "Municípios por fatia"
+        default: "150"
+      pausa_fatias:
+        description: "Pausa entre fatias, em segundos"
+        default: "180"
+      pausa_req:
+        description: "Pausa entre requisições, em segundos"
+        default: "1.5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: coleta-bolsa-familia
+  cancel-in-progress: false
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    # Limite do runner hospedado é 360 min (6h); fica com folga para o setup e para o
+    # job encerrar de forma limpa antes do corte forçado.
+    timeout-minutes: 345
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Configurar identidade do git (commits de progresso)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Coletar em fatias até concluir, commitando o progresso a cada fatia
+        env:
+          PORTAL_TRANSPARENCIA_TOKEN: ${{ secrets.PORTAL_TRANSPARENCIA_TOKEN }}
+          MES: ${{ inputs.mes }}
+          FATIA: ${{ inputs.fatia }}
+          PAUSA_FATIAS: ${{ inputs.pausa_fatias }}
+          PAUSA_REQ: ${{ inputs.pausa_req }}
+        run: |
+          set -u
+          if [ -z "${PORTAL_TRANSPARENCIA_TOKEN:-}" ]; then
+            echo "::error::Secret PORTAL_TRANSPARENCIA_TOKEN não configurado (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+
+          commitar_progresso() {
+            if [ -n "$(git status --porcelain -- data/raw/transparencia data/processed/bolsa_familia_por_uf_*.csv 2>/dev/null)" ]; then
+              git add -A -- data/raw/transparencia data/processed
+              git commit -q -m "Progresso da coleta do Bolsa Família ($MES)"
+              git push -q
+              echo "  progresso commitado."
+            fi
+          }
+
+          falhas=0
+          while true; do
+            saida=$(python scripts/coletar_transparencia_fatias.py --mes "$MES" --fatia "$FATIA" --pausa "$PAUSA_REQ" 2>&1)
+            rc=$?
+            echo "$saida"
+            commitar_progresso
+
+            if echo "$saida" | grep -q "limite de uso"; then
+              echo "::warning::API sinalizou limite de uso — parando. Dispare o workflow de novo mais tarde para continuar."
+              exit 0
+            fi
+            if echo "$saida" | grep -q "Coleta completa"; then
+              echo "Coleta concluída e commitada — pronta para scripts/analisar_pergunta_central.py."
+              exit 0
+            fi
+            if [ $rc -ne 0 ]; then
+              falhas=$((falhas + 1))
+              if [ $falhas -ge 3 ]; then
+                echo "::error::3 falhas seguidas — parando. Dispare o workflow de novo para continuar de onde parou."
+                exit 1
+              fi
+              echo "  falha $falhas/3 — aguardando 5 min e tentando de novo."
+              sleep 300
+              continue
+            fi
+            falhas=0
+            sleep "$PAUSA_FATIAS"
+          done
