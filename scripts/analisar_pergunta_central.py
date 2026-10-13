@@ -116,8 +116,11 @@ def quebras(df: pd.DataFrame) -> dict:
 
 def dimensionamento(df: pd.DataFrame) -> dict:
     ggr, cpfs = 36959783379.70, 25245319
-    bf = pd.read_csv(RAW / "transparencia" / "bolsa_familia_202512.csv")
-    beneficio_medio = float(bf["valor"].sum() / bf["beneficiarios"].sum())
+    # Só precisa do total nacional (soma de valor e de beneficiários), que o agregado por
+    # UF já versionado (ver analise_uf) fornece — sem depender do CSV bruto por
+    # município, que não é versionado (ver README, "Dados versionados por exceção").
+    bf = pd.read_csv(PROC / "bolsa_familia_por_uf_202512.csv")
+    beneficio_medio = float(bf["valor_repassado"].sum() / bf["beneficiarios"].sum())
     rend = float(df["rendimento_medio_real_habitual"].iloc[-1])
     ggr_mensal = ggr / cpfs / 12
     return {
