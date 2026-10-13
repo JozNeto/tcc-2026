@@ -2,10 +2,6 @@ name: Coleta e análise dos dados
 
 on:
   workflow_dispatch: {}
-  schedule:
-    # toda segunda-feira às 09:00 UTC — as fontes usadas aqui são mensais, não há
-    # necessidade de rodar com mais frequência.
-    - cron: "0 9 * * 1"
 
 jobs:
   coletar-e-analisar:
